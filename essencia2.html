@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VerdeVida | Reciclagem e Sustentabilidade</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            background-color: #f8faf8;
+            color: #2d3e2f;
+            overflow-x: hidden;
+        }
+
+        /* Cores da marca */
+        :root {
+            --verde-floresta: #1b4d3e;
+            --verde-claro: #4c9a7a;
+            --verde-neon: #88d18a;
+            --terracota: #d99f5e;
+            --areia: #f0f0e7;
+            --grafite: #333333;
+            --branco: #ffffff;
+            --sombra: rgba(0, 40, 20, 0.08);
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            line-height: 1.1;
+            color: var(--branco);
+            text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 2rem;
+            color: var(--verde-floresta);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--verde-neon);
+            border-radius: 2px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        /* ----- HEADER COM SUBMENUS E HOVER ----- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--verde-floresta), var(--verde-claro));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        /* Menu principal */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu > li {
+            position: relative;
+        }
+
+        .nav-menu > li > a {
+            text-decoration: none;
+            color: var(--grafite);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+
+        /* Efeito Hover nos menus principais */
+        .nav-menu > li > a:hover {
+            color: var(--verde-claro);
+            border-bottom-color: var(--verde-neon);
+            transform: translateY(-2px);
+        }
+
+        /* Submenu */
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 260px;
+            background: var(--branco);
+            border-radius: 16px;
+            padding: 1rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 20px 40px var(--sombra);
+            border: 1px solid rgba(76, 154, 122, 0.1);
+            pointer-events: none;
+        }
+
+        .nav-menu li:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px);
+            pointer-events: all;
+        }
+
+        .submenu li {
+            list-style: none;
+        }
+
+        .submenu li a {
+            display: block;
+            padding: 0.7rem 1.8rem;
+            text-decoration: none;
+            color: var(--grafite);
+            font-size: 0.95rem;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        /* Efeito Hover nos submenus */
+        .submenu li a:hover {
+            background: linear-gradient(90deg, var(--verde-neon) 0%, transparent 100%);
+            color: var(--verde-floresta);
+            padding-left: 2.5rem;
+        }
+
+        .submenu li a::before {
+            content: '🌱';
+            position: absolute;
+            left: 1rem;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .submenu li a:hover::before {
+            opacity: 1;
+        }
+
+        /* Menu mobile */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--verde-floresta);
+            cursor: pointer;
+        }
+
+        /* ----- SLIDER COM SETAS (ESQUERDA -> DIREITA) ----- */
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            margin-top: 30px;
+            position: relative;
+          
+        }
+
+        .slider {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slides {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.5);
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            color: white;
+            max-width: 650px;
+            z-index: 2;
+            animation: slideIn 1s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+
+        .slide-content p {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--verde-neon);
+            color: var(--verde-floresta);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: 0.3s;
+            border: 2px solid transparent;
+            box-shadow: 0 5px 15px rgba(136, 209, 138, 0.3);
+        }
+
+        .btn:hover {
+            background: transparent;
+            border-color: var(--branco);
+            color: var(--branco);
+            transform: scale(1.05);
+        }
+
+        /* Setas de navegação */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: 0.3s;
+            color: green;
+            font-size: 1rem;
+            user-select: none;
+        }
+
+        .slider-arrow:hover {
+            background: var(--verde-neon);
+            border-color: var(--verde-neon);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .arrow-left {
+            left: 30px;
+        }
+
+        .arrow-right {
+            right: 30px;
+        }
+
+        /* Indicadores */
+        .slider-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dot.active {
+            background: var(--verde-neon);
+            transform: scale(1.3);
+        }
+
+        /* ----- SEÇÃO IMPACTO ----- */
+        .impacto {
+            background: var(--areia);
+        }
+
+        .impacto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .impacto-card {
+            background: var(--branco);
+            padding: 3rem 2rem;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px var(--sombra);
+            transition: 0.3s;
+            border: 1px solid rgba(76, 154, 122, 0.1);
+        }
+
+        .impacto-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--verde-neon);
+        }
+
+        .impacto-card h3 {
+            font-size: 3rem;
+            color: var(--verde-claro);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ----- VERTICAIS ----- */
+        .verticais-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .vertical-card {
+            background: var(--branco);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px var(--sombra);
+            transition: 0.4s;
+        }
+
+        .vertical-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(27, 77, 62, 0.2);
+        }
+
+        .vertical-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: 0.6s;
+        }
+
+        .vertical-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .vertical-content {
+            padding: 2rem;
+        }
+
+        /* ----- FOOTER ----- */
+        footer {
+            background: var(--verde-floresta);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col p, .footer-col a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--verde-neon);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* ----- RESPONSIVIDADE ----- */
+        @media (max-width: 1000px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-menu.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 2rem;
+                box-shadow: 0 20px 30px var(--sombra);
+                gap: 1rem;
+            }
+
+            .submenu {
+                position: static;
+                box-shadow: none;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                padding: 0.5rem 0 0 1rem;
+                border: none;
+                background: transparent;
+                display: none;
+            }
+
+            .nav-menu li.active .submenu {
+                display: block;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .arrow-left {
+                left: 15px;
+            }
+
+            .arrow-right {
+                right: 15px;
+            }
+
+            .slider-arrow {
+                width: 45px;
+                height: 45px;
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .slide-content {
+                left: 5%;
+                right: 5%;
+            }
+            
+            .slide-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .slide-content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">VerdeVida</a>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="#">Início</a></li>
+            <li>
+                <a href="#">Soluções ▾</a>
+                <ul class="submenu">
+                    <li><a href="#">Coleta Seletiva</a></li>
+                    <li><a href="#">Reciclagem Industrial</a></li>
+                    <li><a href="#">Compostagem</a></li>
+                    <li><a href="#">Logística Reversa</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Sustentabilidade ▾</a>
+                <ul class="submenu">
+                    <li><a href="#">Relatórios ESG</a></li>
+                    <li><a href="#">Créditos de Carbono</a></li>
+                    <li><a href="#">Projetos Sociais</a></li>
+                    <li><a href="#">Certificações</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Sobre ▾</a>
+                <ul class="submenu">
+                    <li><a href="#">Quem Somos</a></li>
+                    <li><a href="#">Nossa História</a></li>
+                    <li><a href="#">Unidades</a></li>
+                    <li><a href="#">Carreiras</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contato</a></li>
+        </ul>
+    </header>
+
+    <!-- SLIDER COM SETAS -->
+    <section class="hero">
+        <div class="slider">
+            <div class="slides">
+                <div class="slide active" id="slide1">
+                    <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Floresta sustentável">
+                    <div class="slide-content">
+                        <h1>Reciclagem que transforma o futuro</h1>
+                        <p>Processamos mais de 500 mil toneladas de resíduos por ano, gerando energia limpa e matéria-prima renovável.</p>
+                        <a href="#" class="btn">Conheça nosso impacto</a>
+                    </div>
+                </div>
+                <div class="slide" id="slide2">
+                    <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Energia renovável">
+                    <div class="slide-content">
+                        <h1>Energia que vem dos resíduos</h1>
+                        <p>Transformamos biogás em eletricidade para abastecer milhares de lares com energia limpa.</p>
+                        <a href="#" class="btn">Saiba mais</a>
+                    </div>
+                </div>
+                <div class="slide" id="slide3">
+                    <img src="https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Economia circular">
+                    <div class="slide-content">
+                        <h1>Economia circular na prática</h1>
+                        <p>+15 milhões de créditos de carbono gerados e 98% dos resíduos reaproveitados.</p>
+                        <a href="#" class="btn">Nossos números</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Setas de navegação -->
+            <div class="slider-arrow arrow-left" id="prevSlide">←</div>
+            <div class="slider-arrow arrow-right" id="nextSlide">→</div>
+
+            <!-- Dots indicadores -->
+            <div class="slider-dots" id="sliderDots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPACTO EM NÚMEROS -->
+    <section class="impacto">
+        <div class="container">
+            <h2>Nosso impacto</h2>
+            <div class="impacto-grid">
+                <div class="impacto-card">
+                    <h3>+500k</h3>
+                    <p>toneladas recicladas/ano</p>
+                </div>
+                <div class="impacto-card">
+                    <h3>15M</h3>
+                    <p>créditos de carbono</p>
+                </div>
+                <div class="impacto-card">
+                    <h3>98%</h3>
+                    <p>de reaproveitamento</p>
+                </div>
+                <div class="impacto-card">
+                    <h3>+200</h3>
+                    <p>municípios atendidos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VERTICAIS DE NEGÓCIO -->
+    <section class="container">
+        <h2>Nossas soluções</h2>
+        <div class="verticais-grid">
+            <div class="vertical-card">
+                <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Reciclagem">
+                <div class="vertical-content">
+                    <h3>Reciclagem Industrial</h3>
+                    <p>Tecnologia de ponta para transformar resíduos em matéria-prima de alta qualidade.</p>
+                </div>
+            </div>
+            <div class="vertical-card">
+                <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Energia Verde">
+                <div class="vertical-content">
+                    <h3>Energia Verde</h3>
+                    <p>Biogás e biometano para uma matriz energética mais limpa.</p>
+                </div>
+            </div>
+            <div class="vertical-card">
+                <img src="https://images.unsplash.com/photo-1569163139599-0f4517e36f51?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Compostagem">
+                <div class="vertical-content">
+                    <h3>Compostagem</h3>
+                    <p>Transformamos resíduos orgânicos em adubo de alta qualidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3 style="color: white; margin-bottom: 1rem;">VerdeVida</h3>
+                <p>Sustentabilidade e inovação para um futuro mais verde.</p>
+            </div>
+            <div class="footer-col">
+                <h4 style="color: white; margin-bottom: 1rem;">Links Rápidos</h4>
+                <p><a href="#">Sobre nós</a></p>
+                <p><a href="#">Soluções</a></p>
+                <p><a href="#">Carreiras</a></p>
+            </div>
+            <div class="footer-col">
+                <h4 style="color: white; margin-bottom: 1rem;">Contato</h4>
+                <p>contato@verdevida.com.br</p>
+                <p>(11) 3333-4444</p>
+                <div class="social-links">
+                    <a href="#">🌿</a>
+                    <a href="#">🌍</a>
+                    <a href="#">📱</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 VerdeVida. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Slider com setas
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            showSlide(currentSlide + 1);
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // Auto play (opcional)
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+    </script>
+</body>
+</html>
